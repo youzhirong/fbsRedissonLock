@@ -9,7 +9,7 @@
 - 以上场景只是个举例，大多数业务场景都或多或少存在这些判断插入更新的场景
 - 当正常情况，无并发执行的情况。通常代码的逻辑看起来是没有任何问题的。无则插入，有则更新。
 - 但是当并发的情况下，就可能不一样了。比如同个用户，同一时间请求了100次。那么第一次肯定是判断插入数据库中，但是线程2可能没等数据写入DB中，脏读了数据库原有的数据。则也认为该用户不存在，则也执行的是新增的操作。这样一来，并发情况下就可能同个用户信息被新建了多条一样的记录了。大家想想是不是~~~
-- 详情插入/更新用户逻辑可以参考实现：[UserServiceImpl.java](https://github.com/youzhirong/html2doc/blob/master/src/main/java/com/youzhirong/html2word/util/TableUtils.java)
+- 详情插入/更新用户逻辑可以参考实现：[UserServiceImpl.java](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/main/java/com/youzhirong/fbslock/service/impl/UserServiceImpl.java)
 
 		@Override
     	public void saveByDTO(UserDTO userDTO) {
@@ -31,20 +31,22 @@
 				userMapper.updateByPrimaryKey(userDO);
 			}
     	}
-[![](https://www.mdeditor.com/images/logos/markdown.png)](https://www.mdeditor.com/images/logos/markdown.png "markdown")
+[![](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/main/resources/templates/test1.png)](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/main/resources/templates/test1.png "test1")
 
 ## 快速开始
-- 直接运行，数据源准备了一份json格式：[FbslockApplicationTests.java](https://github.com/youzhirong/html2doc/blob/master/src/main/resources/json/postTest.json)
-- 使用postman等测试工具，将json格式post请求http://localhost:7000/export/word
-- 即可下载导出的word。
-
+- 需要先准备redis环境，修改redis相关配置参数（默认是本地，默认端口）
+- 启动项目后，再运行测试，重现并发产生重复问题的测试类：[FbslockApplicationTests.java](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/test/java/com/youzhirong/fbslock/FbslockApplicationTests.java)
+- 使用了redisson的锁，线程调1000并发。测试类：[FbsRedissonlockApplicationTests.java](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/test/java/com/youzhirong/fbslock/FbsRedissonlockApplicationTests.java)
+- 加锁后，并无出现重复插入的相关问题了。
+[![](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/main/resources/templates/test2.png)](https://github.com/youzhirong/fbsRedissonLock/blob/master/src/main/resources/templates/test2.png "test2")
 ## 开发建议
 - 二次开发实现逻辑自行改造
 
 ## 技术选型
-- Spring Boot 2.1.4
-- Freemarker
-- easyPoi
+- Spring Boot 2.2.6.RELEASE
+- Redis
+- Redisson
+- tk-mybatis
 - 其他
 
 ## License
