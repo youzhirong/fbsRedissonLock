@@ -1,0 +1,12 @@
+#Redisson配置
+singleServerConfig:
+  address: "redis://127.0.0.1:6379"
+  password: null
+  clientName: null
+  database: 0 #选择使用哪个数据库0~15
+
+threads: 0
+nettyThreads: 0
+codec:
+  class: "org.redisson.codec.JsonJacksonCodec"
+transportMode: "NIO"
