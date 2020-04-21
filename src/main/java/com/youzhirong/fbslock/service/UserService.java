@@ -14,5 +14,7 @@ public interface UserService {
     void saveByDTO(UserDTO userDTO);
     
     void saveByDTOLock(UserDTO userDTO);
+    
+    void saveByDTOFairLock(UserDTO userDTO);
  
 }

@@ -32,16 +32,16 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 //swagger要扫描的包路径
-                .apis(RequestHandlerSelectors.basePackage("com.youzhirong.excel"))
+                .apis(RequestHandlerSelectors.basePackage("com.youzhirong.fbslock"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("excel导入导出API管理")
-                .description("excel导入导出API管理")
-                .termsOfServiceUrl("localhost:4444")
+                .title("分布式锁API管理")
+                .description("分布式锁API管理")
+                .termsOfServiceUrl("localhost:1100")
                 .version("1.0")
                 .build();
     }
